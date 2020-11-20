@@ -11,7 +11,7 @@ jupyter:
 airflow:
     title: "Airflow"
     iconUrl: "https://airflow.apache.org/_images/pin_large.png"
-    start: [ "/home/ubuntu/airflow/start_airflow_postgres.sh" ]
+    start: [ "/home/ubuntu/airflow/start.sh" ]
     httpProxy:
         port: 8080
         rewrite: false

@@ -19,7 +19,7 @@ RUN export AIRFLOW_HOME=/home/ubuntu/airflow && airflow initdb
 RUN rm /home/ubuntu/airflow/airflow.cfg && ln -s /mnt/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 RUN chmod 777 /home/ubuntu/airflow
 #starts scheduler and webserver. Sets Domino Environment Vars and refactors envars in airflow.cfg
-ADD https://gist.githubusercontent.com/Jphelps87/a4f4382c0d7464c87061916b06524982/raw/179cbf2a423165e2423877409ba48a46bef6c785/start_airflow_postgres.sh /home/ubuntu/airflow/
+ADD start.sh /home/ubuntu/airflow/
 RUN chmod 777 -R /home/ubuntu/airflow/
 #install plugins
 RUN pip install airflow-code-editor #allows in GUI editing of the dags
