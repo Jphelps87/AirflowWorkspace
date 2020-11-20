@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#Check if Airflow Dir is present in Domino
+if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
+    cd /tmp
+    git clone https://github.com/imarchenko/domino_airflow_starter_kit.git
+    cd domino_airflow_starter_kit
+    find . -name "*git*" | xargs -I {} rm -rf {}
+    mv airflow $DOMINO_WORKING_DIR/airflow
+fi
+
 #refactor environment vars
 echo "refactor environment variables"
 sudo sed -Ei "s#base_dir#$DOMINO_WORKING_DIR#g" /home/ubuntu/airflow/airflow.cfg
