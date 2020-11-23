@@ -23,9 +23,10 @@ echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh
 
 
 echo "build dependencies"
-airflow initdb
+
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
+airflow initdb
 #start airflow webserver and scheduler
 echo "Starting up Airflow"
 airflow webserver -p 8080 -hn "0.0.0.0" &
