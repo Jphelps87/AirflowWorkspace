@@ -22,12 +22,12 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	rm /etc/postgresql/9.3/main/postgresql.conf && ln -s $DOMINO_WORKING_DIR/airflow/postgresql/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
 	rm /etc/postgresql/9.3/main/pg_hba.conf && ln -s $DOMINO_WORKING_DIR/airflow/postgresql/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf	
 	
+	#build Airflow config file
+	echo "Create Airflow.cfg"
+	export AIRFLOW_HOME=/home/ubuntu/airflow && airflow initdb
 fi
 
 
-
-#rm /etc/postgresql/9.3/main/postgresql.conf && ln -s /mnt/airflow/postgresql/V93/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
-#rm /etc/postgresql/9.3/main/pg_hba.conf && ln -s /mnt/airflow/postgresql/V93/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
 # refactor environment vars
 # echo "refactor environment variables"
