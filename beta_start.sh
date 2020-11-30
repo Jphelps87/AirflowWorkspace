@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#this is a test to see if Docker does not suck. 
+
 #Check if Airflow Dir is present in Domino Project....if not create airflow directory
 if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
     mkdir -p  $DOMINO_WORKING_DIR/airflow/{dags,logs,postgresql}
