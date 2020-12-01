@@ -59,7 +59,6 @@ echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh
 
 echo "build dependencies"
 #Create symbolic link and remove default file
-sudo rm /home/ubuntu/airflow/airflow.cfg
 sudo ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
