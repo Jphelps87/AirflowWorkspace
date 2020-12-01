@@ -29,6 +29,14 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	#configure and create symbolic link to new config file
 	echo "Congire Airflow.cfg >>>>> Link File"
 	sed -i '4s#/home/ubuntu/airflow/dags#'"$DOMINO_WORKING_DIR"'/airflow/dags#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '8s#/home/ubuntu/airflow/logs#'"$DOMINO_WORKING_DIR"'/airflow/logs#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '47s#/home/ubuntu/airflow/logs/dag_processor_manager/dag_processor_manager.log#'"$DOMINO_WORKING_DIR"'/airflow/logs/dag_processor_manager/dag_processor_manager.log#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '69s#SequentialExecutor#LocalExecutor#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '74s#sqlite:////home/ubuntu/airflow/airflow.db#postgresql+psycopg2://airflow:airflow@localhost/airflow#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '136s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '141#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 fi
 
 
