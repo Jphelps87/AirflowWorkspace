@@ -28,37 +28,42 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	cp /home/ubuntu/airflow/airflow.cfg "$DOMINO_WORKING_DIR"/airflow/
 	#configure and create symbolic link to new config file
 	echo "Congire Airflow.cfg >>>>> Link File"
+	#dag dir 
 	sed -i '4s#/home/ubuntu/airflow/dags#'"$DOMINO_WORKING_DIR"'/airflow/dags#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#log dir
 	sed -i '8s#/home/ubuntu/airflow/logs#'"$DOMINO_WORKING_DIR"'/airflow/logs#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#proscess manager log
 	sed -i '47s#/home/ubuntu/airflow/logs/dag_processor_manager/dag_processor_manager.log#'"$DOMINO_WORKING_DIR"'/airflow/logs/dag_processor_manager/dag_processor_manager.log#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Executor
 	sed -i '69s#SequentialExecutor#LocalExecutor#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#DB connecion 
 	sed -i '74s#sqlite:////home/ubuntu/airflow/airflow.db#postgresql+psycopg2://airflow:airflow@localhost/airflow#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Load Examples
 	sed -i '136s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-	sed -i '141#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Load default connections
+	sed -i '141s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Expost Config file in UI
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#Create symbolic link and remove default file
+	rm /home/ubuntu/airflow/airflow.cfg && ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+
 fi
 
+#create DB in postgres
+sudo chown -R postgres /mnt/airflow/postgresql/
+sudo service postgresql start
 
+echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
+echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
+echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
 
-# refactor environment vars
-# echo "refactor environment variables"
-# sudo sed -Ei "s#base_dir#$DOMINO_WORKING_DIR#g" /home/ubuntu/airflow/airflow.cfg
-
-# #create DB in postgres
-# sudo chown -R postgres /mnt/airflow/postgresql/
-# sudo service postgresql start
-
-# echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
-# echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
-# echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
-
-
-# echo "build dependencies"
-# airflow initdb
-# airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
-# airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
-# #start airflow webserver and scheduler
-# echo "Starting up Airflow"
-# airflow webserver -p 8080 -hn "0.0.0.0" &
-# airflow scheduler
+echo "build dependencies"
+airflow initdb
+airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
+airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
+#start airflow webserver and scheduler
+echo "Starting up Airflow"
+airflow webserver -p 8080 -hn "0.0.0.0" &
+airflow scheduler
