@@ -28,7 +28,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	cp /home/ubuntu/airflow/airflow.cfg "$DOMINO_WORKING_DIR"/airflow/
 	#configure and create symbolic link to new config file
 	echo "Congire Airflow.cfg >>>>> Link File"
-	sed -i '4s#/home/ubuntu/airflow/dags#$DOMINO_WORKING_DIR/airflow/dags' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '4s#/home/ubuntu/airflow/dags#'"$DOMINO_WORKING_DIR"'/airflow/dags#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 fi
 
 
