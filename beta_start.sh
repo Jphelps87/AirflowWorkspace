@@ -46,8 +46,6 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-	#Create symbolic link and remove default file
-	rm /home/ubuntu/airflow/airflow.cfg && ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 
 fi
 
@@ -60,6 +58,8 @@ echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
 echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
 
 echo "build dependencies"
+#Create symbolic link and remove default file
+rm /home/ubuntu/airflow/airflow.cfg && ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
