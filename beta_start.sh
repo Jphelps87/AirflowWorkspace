@@ -58,8 +58,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 	airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
 	#backup airflow db
-	echo pg_dump --format=c airflow > /mnt/airflow/postgresql/db_dump_file.dump | sudo sh -c 'sudo -u postgres psql'
-
+	echo "pg_dump --format=c airflow > /mnt/airflow/postgresql/db_dump_file.dump" | sudo sh -c 'sudo -u postgres psql'
 fi
 
 #create DB in postgres
@@ -69,11 +68,18 @@ sudo service postgresql start
 # echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
 # echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
 # echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
-echo pg_restore -v -d airflow /mnt/airflow/postgresql/db_dump_file.dump | sudo sh -c 'sudo -u postgres psql'
+echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
+echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
+echo "pg_restore -v -d airflow /mnt/airflow/postgresql/db_dump_file.dump" | sudo sh -c 'sudo -u postgres psql'
 
 
 echo "build dependencies"
 #Create symbolic link and remove default file
+FILE=/home/ubutu/airflow/airflow.cfg
+if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
+        echo "removeing old airflow.cfg file"
+        rm  /home/ubuntu/airflow/airflow.cfg
+fi
 sudo ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 # airflow initdb
 # airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
