@@ -58,22 +58,18 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 	airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
 	#backup airflow db
+	sleep 5
 	sudo sh -c 'sudo -u postgres pg_dumpall --file=/mnt/airflow/postgresql/dumpall.sql'
 fi
 
 #create DB in postgres
 sudo chown -R postgres /mnt/airflow/postgresql/
 sudo service postgresql start
-
-# echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
-# echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
-# echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
 #echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
 #echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'i
 #echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
 echo "Restore Database"
 sudo sh -c 'sudo -u postgres psql -f /mnt/airflow/postgresql/dumpall.sql'
-
 echo "link custom airflow.cfg"
 #Create symbolic link and remove default file
 FILE=/home/ubutu/airflow/airflow.cfg
