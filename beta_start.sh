@@ -58,7 +58,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 	airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
 	#backup airflow db
-	echo pg_dump --format=c airflow > /mnt/airflow/postgresql/db_dump_file.dump | sudo sh -c 'sudo -u postgres psql'
+	sudo sh -c 'sudo -u postgres pg_dump -h localhost -FC airflow > /mnt/airflow/postgresql/dump.sql'
 fi
 
 # #create DB in postgres
