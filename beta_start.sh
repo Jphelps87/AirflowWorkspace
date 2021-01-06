@@ -66,7 +66,7 @@ fi
 sudo chown -R postgres /mnt/airflow/postgresql/
 sudo service postgresql start
 echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
-echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'i
+echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
 echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
 # echo "Restore Database"
 # sudo sh -c 'sudo -u postgres psql -f /mnt/airflow/postgresql/dumpall.sql'
