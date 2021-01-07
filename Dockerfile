@@ -6,7 +6,10 @@ RUN apt-key adv --recv-key --keyserver keyserver.ubuntu.com 51716619E084DAB9 && 
 
 #download start script from github rebuild11
 #ADD https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/beta_start.sh /home/ubuntu/airflow/ 
-ADD local_start.sh /home/ubuntu/airflow/ #for running local
+#local run shit
+ADD local_start.sh /home/ubuntu/airflow/ 
+ADD domino-pipeline.py /airflow/dags/
+ADD hello_world.py /airflow/dags/
 RUN chmod 777 -R /home/ubuntu/airflow/
 RUN pip install airflow-code-editor #allows in GUI editing of the dags
 RUN pip install git+https://github.com/dominodatalab/python-domino.git #python libary
