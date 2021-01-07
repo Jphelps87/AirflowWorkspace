@@ -44,7 +44,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#base_url
-	#sed -i '294s#http://test:8080#https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookSession/${DOMINO_RUN_ID}#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	sed -i '294s#http://test:8080#https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookPublicUrl/${DOMINO_RUN_ID}#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 
 	#Create Database and copy it to domino working dir. 
 	#Create DB and user
