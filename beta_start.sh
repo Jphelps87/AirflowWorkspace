@@ -86,7 +86,7 @@ fi
 
 sudo cp "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 domino_url="base_url = https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookSession/$DOMINO_RUN_ID/"
-sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' home/ubuntu/airflow/airflow.cfg
+sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' /home/ubuntu/airflow/airflow.cfg
 echo "Domino URL"
 actual= cat /home/ubuntu/airflow/airflow.cfg | grep base_url
 echo $actual
