@@ -13,6 +13,10 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '85s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '90s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '92s/md5/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
+
+	 https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookSession/${DOMINO_RUN_ID}/
+	sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/' /home/ubuntu/airflow/airflow.cfg
+
 	#configue postgresql.conf file
 	echo "Configure postgresql.conf"
 	sed -i '59s/#listen_addresses/listen_addresses/' "$DOMINO_WORKING_DIR"/airflow/postgresql/postgresql.conf
@@ -78,9 +82,11 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
         echo "removeing old airflow.cfg file"
         rm  /home/ubuntu/airflow/airflow.cfg
 fi
-sudo cp $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
-#refactor base_url for each run. 
-sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookPublicUrl/${DOMINO_RUN_ID}#' /home/ubuntu/airflow/airflow.cfg
+#build sub_domain url and refactor for each run. 
+domino_url="base_url =https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookPublicUrl/$DOMINO_RUN_ID"
+sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+sudo ln -s /airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
