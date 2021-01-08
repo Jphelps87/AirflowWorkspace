@@ -43,8 +43,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-	#base_url
-	sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookPublicUrl/${DOMINO_RUN_ID}#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+
 
 	#Create Database and copy it to domino working dir. 
 	#Create DB and user
@@ -79,7 +78,9 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
         echo "removeing old airflow.cfg file"
         rm  /home/ubuntu/airflow/airflow.cfg
 fi
-sudo ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+sudo cp $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+#refactor base_url for each run. 
+sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookPublicUrl/${DOMINO_RUN_ID}#' /home/ubuntu/airflow/airflow.cfg
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
