@@ -83,11 +83,14 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
         rm  /home/ubuntu/airflow/airflow.cfg
 fi
 #build sub_domain url and refactor for each run.
-echo "build domino_url"
-domino_url="base_url = https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookPublicUrl/$DOMINO_RUN_ID/"
-sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-echo "$domino_url"
-sudo ln -s "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+
+sudo cp "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+https://demo.dominodatalab.com/justin_phelps/Airflow_testing/notebookSession/5ff8c70d0de5e1255a286d14
+domino_url="base_url = https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookSession/$DOMINO_RUN_ID/"
+sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' home/ubuntu/airflow/airflow.cfg
+echo "Domino URL" 
+actual= cat home/ubuntu/airflow/airflow.config | grep base_url
+echo "$actual"
 
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
