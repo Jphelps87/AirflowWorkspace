@@ -82,10 +82,11 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
         echo "removeing old airflow.cfg file"
         rm  /home/ubuntu/airflow/airflow.cfg
 fi
-#build sub_domain url and refactor for each run. 
+#build sub_domain url and refactor for each run.
+echo "build domino_url"
 domino_url="base_url =https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookPublicUrl/$DOMINO_RUN_ID"
 sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-sudo ln -s /airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+sudo ln -s "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
