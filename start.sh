@@ -13,6 +13,10 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '85s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '90s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '92s/md5/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
+
+	 https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookSession/${DOMINO_RUN_ID}/
+	sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/' /home/ubuntu/airflow/airflow.cfg
+
 	#configue postgresql.conf file
 	echo "Configure postgresql.conf"
 	sed -i '59s/#listen_addresses/listen_addresses/' "$DOMINO_WORKING_DIR"/airflow/postgresql/postgresql.conf
@@ -43,33 +47,14 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-
-	#Create Database and copy it to domino working dir. 
-	#Create DB and user
-	sudo chown -R postgres /mnt/airflow/postgresql/
-	sudo service postgresql start
-	echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
-	echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
-	echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
-	#link new config file 
-	rm /home/ubuntu/airflow/airflow.cfg && ln -s /mnt/airflow/airflow.cfg /home/ubuntu/airflow/airflow.c
-	#build database and add env vars. 
-	airflow initdb
-	airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
-	airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
-	#backup airflow db
-	# sleep 5
-	# sudo sh -c 'sudo -u postgres pg_dumpall --file=/mnt/airflow/postgresql/dumpall.sql'
 fi
 
 #create DB in postgres
 sudo chown -R postgres /mnt/airflow/postgresql/
 sudo service postgresql start
 echo "CREATE USER airflow with PASSWORD 'airflow'" | sudo sh -c 'sudo -u postgres psql'
-echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'i
+echo "CREATE DATABASE airflow;" | sudo sh -c 'sudo -u postgres psql'
 echo "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO airflow;" | sudo sh -c 'sudo -u postgres psql'
-# echo "Restore Database"
-# sudo sh -c 'sudo -u postgres psql -f /mnt/airflow/postgresql/dumpall.sql'
 echo "link custom airflow.cfg"
 #Create symbolic link and remove default file
 FILE=/home/ubutu/airflow/airflow.cfg
@@ -77,7 +62,13 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
         echo "removeing old airflow.cfg file"
         rm  /home/ubuntu/airflow/airflow.cfg
 fi
-sudo ln -s $DOMINO_WORKING_DIR/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+#build sub_domain url and refactor for each run.
+sudo cp "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
+domino_url="base_url = https://demo.dominodatalab.com/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/notebookSession/$DOMINO_RUN_ID"
+sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' /home/ubuntu/airflow/airflow.cfg
+echo "Domino URL"
+actual= cat /home/ubuntu/airflow/airflow.cfg | grep base_url
+
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
