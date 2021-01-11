@@ -13,10 +13,6 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '85s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '90s/peer/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
 	sed -i '92s/md5/trust/' "$DOMINO_WORKING_DIR"/airflow/postgresql/pg_hba.conf
-
-	 https://demo.dominodatalab.com/${DOMINO_PROJECT_OWNER}/${DOMINO_PROJECT_NAME}/notebookSession/${DOMINO_RUN_ID}/
-	sed -i '285#http://localhost:8080#https://demo.dominodatalab.com/' /home/ubuntu/airflow/airflow.cfg
-
 	#configue postgresql.conf file
 	echo "Configure postgresql.conf"
 	sed -i '59s/#listen_addresses/listen_addresses/' "$DOMINO_WORKING_DIR"/airflow/postgresql/postgresql.conf
