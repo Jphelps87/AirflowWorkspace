@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Lollie Is AWESOME"
+echo "Justus Is AWESOME"
 #Check if Airflow Dir is present in Domino Project....if not create airflow directory
 if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	echo "Creating Airflow Directory"
