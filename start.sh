@@ -1,4 +1,6 @@
 #!/bin/bash
+
+echo "start.sh script running"
 #Check if Airflow Dir is present in Domino Project....if not create airflow directory
 if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	echo "Creating Airflow Directory"
@@ -50,11 +52,11 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 git_cmd = /usr/bin/git
 git_default_args = -c color.ui=true
 git_init_repo = True
-root_directory = /mnt/airflow/dags
+root_directory = '"$DOMINO_WORKING_DIR"'/airflow/dags
 mount_name = data
 mount_path = /home/ubuntu/airflow/data
 mount1_name = logs
-mount1_path = /mnt/airflow/logs'
+mount1_path = '"$DOMINO_WORKING_DIR"'/airflow/logs'
 	echo "$editor_config" >> "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 
 	#add demo DAGS
