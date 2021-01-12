@@ -44,6 +44,18 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
+	#add config for plugin code editor
+	var='
+	[code_editor]
+	git_cmd = /usr/bin/git
+	git_default_args = -c color.ui=true
+	git_init_repo = True
+	root_directory = /mnt/airflow/dags
+	mount_name = data
+	mount_path = /home/ubuntu/airflow/data
+	mount1_name = logs
+	mount1_path = /mnt/airflow/logs'
+	echo "$var" >> test.cfg
 
 	#add demo DAGS
 	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
