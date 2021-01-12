@@ -55,7 +55,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	mount_path = /home/ubuntu/airflow/data
 	mount1_name = logs
 	mount1_path = /mnt/airflow/logs'
-	echo "$editor_config" >> airflow.cfg
+	echo "$editor_config" >> "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 
 	#add demo DAGS
 	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
