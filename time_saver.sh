@@ -1,6 +1,7 @@
 #!/bin/bash
+now=$(date)
 
-curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/start.sh --output /home/ubuntu/airflow/start.sh
-sudo chmod 777 /home/ubuntu/airflow/start.sh
-sh ./home/ubuntu/airflow/start.sh
+git status 
+git add .
+git commit -m '"$now"'
 
