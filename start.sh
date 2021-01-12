@@ -83,6 +83,7 @@ domino_url="base_url = https://$DOMAINNAME/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT
 sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' /home/ubuntu/airflow/airflow.cfg
 echo "Domino URL"
 actual= cat /home/ubuntu/airflow/airflow.cfg | grep base_url
+echo "this is a test delete me"
 
 airflow initdb
 airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
