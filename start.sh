@@ -45,23 +45,10 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '343s#False#True#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	#Catchup by default
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
-	#add config for plugin code editor
-	editor_config='
-[code_editor]
-git_cmd = /usr/bin/git
-git_default_args = -c color.ui=true
-git_init_repo = True
-root_directory = '"$DOMINO_WORKING_DIR"'/airflow/dags
-mount_name = data
-mount_path = /home/ubuntu/airflow/data
-mount1_name = logs
-mount1_path = '"$DOMINO_WORKING_DIR"'/airflow/logs'
-	echo "$editor_config" >> "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 
 	#add demo DAGS
-	# curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
-	# curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/hello_world.py --output "$DOMINO_WORKING_DIR"/airflow/dags/hello_world.py
-	# sudo chmod 777 -R "$DOMINO_WORKING_DIR"/airflow/dags/
+	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
+	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/hello_world.py --output "$DOMINO_WORKING_DIR"/airflow/dags/hello_world.py
 fi
 
 #create DB in postgres
