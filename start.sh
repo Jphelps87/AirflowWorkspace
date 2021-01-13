@@ -61,7 +61,7 @@ mount1_path = '"$DOMINO_WORKING_DIR"'/airflow/logs'
 	#add demo DAGS
 	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
 	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/hello_world.py --output "$DOMINO_WORKING_DIR"/airflow/dags/hello_world.py
-	
+	sudo chmod 777 -R "$DOMINO_WORKING_DIR"/airflow/dags/ 
 fi
 
 #create DB in postgres
