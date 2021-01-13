@@ -1,0 +1,42 @@
+2021-01-13 12:58:57,774 MST  INFO HttpService - HttpService maxConnections: 30 maxConnectionsPerRoute: 10 connectTimeoutSec: 60 readTimeoutSec: 120
+2021-01-13 12:58:57,979 MST  INFO Domino - ================================================================================
+2021-01-13 12:58:57,980 MST  INFO Domino - Starting client. BuildInfo=name: common-core, version: 4.3.1, scalaVersion: 2.12.10, sbtVersion: 1.3.10, buildNumber: 6c6dd07a-db2b-4ade-801e-048d376807f4, gitCommit: bf6bf5d8706ef9e5018b3221a375d1d0004dde36
+2021-01-13 12:58:57,980 MST DEBUG Domino - CWD = /Users/justinphelps/Documents/Domino/Projects/AirflowWorkspace
+2021-01-13 12:58:57,982 MST  INFO Domino - executing command: login
+2021-01-13 12:58:58,796 MST DEBUG LoginCommand - logging in to host: https://demo.dominodatalab.com
+2021-01-13 12:58:58,799 MST DEBUG ClientControllerProxy - Getting site config from https://demo.dominodatalab.com/cliSiteConfig
+2021-01-13 12:58:58,804 MST DEBUG ApiKeyBasedTransport - Issuing request to https://demo.dominodatalab.com/cliSiteConfig (full request = [Request redacted])
+2021-01-13 12:58:59,031 MST  INFO LoginCommand - Received site config:
+SiteConfig(https://demo.dominodatalab.com,S3,None,Some(https://demo.dominodatalab.com/assets/cli/default),authorization_key,Some(OAuthConfig(https://demo.dominodatalab.com/auth/realms/DominoRealm/protocol/openid-connect/token,https://demo.dominodatalab.com/authorizeCli,https://demo.dominodatalab.com/authorizeCliCode)),None)
+2021-01-13 12:58:59,032 MST DEBUG AutoUpdaterSettings$ - Setting CLI update source to: https://demo.dominodatalab.com/assets/cli/default/versions/updates.xml
+2021-01-13 12:58:59,279 MST DEBUG ApacheHttpClientRequest - Got an error: request = ApacheHttpClientRequest(https://demo.dominodatalab.com/auth/realms/DominoRealm/protocol/openid-connect/token,POST,Map(),Map(User-Agent -> domino-cli/4.3.1),120 seconds,60 seconds,false,FormBody(List((scope,openid profile), (refresh_token,eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5ZDlhMDBkOC1iYzQ0LTQ4MDQtOWMwYy01OWIyOGE0OTllNWQifQ.eyJleHAiOjE2MDc4ODYzODQsImlhdCI6MTYwNTgwOTQ0OCwianRpIjoiNmIzNGMzYTctYzkyYS00NzEyLWE1ZjItYzZhYTc1NTg1MGJlIiwiaXNzIjoiaHR0cHM6Ly9kZW1vLmRvbWlub2RhdGFsYWIuY29tL2F1dGgvcmVhbG1zL0RvbWlub1JlYWxtIiwiYXVkIjoiaHR0cHM6Ly9kZW1vLmRvbWlub2RhdGFsYWIuY29tL2F1dGgvcmVhbG1zL0RvbWlub1JlYWxtIiwic3ViIjoiYWZiNjhhNzktNDJiMS00ZjY1LWIyMWQtYjI5NDdiNjRkNGM3IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImRvbWluby1wbGF5Iiwic2Vzc2lvbl9zdGF0ZSI6IjgwNmVmZGU1LTdkZDYtNDU0NS1hNWEzLTAzODQzY2Q1ZjE3MSIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUifQ.ePfoiSXreITqg4CD_4WMvlL_IRcrVDel61aHo6jl82w), (redirect_uri,https://demo.dominodatalab.com/authorizeCliCode), (client_id,domino-play), (client_secret,803f6fb4-2aca-4b71-bcc9-639e05338905), (grant_type,refresh_token))),domino.common.util.http.HttpService@338c99c8), response: status = 400, statusText = Bad Request, headers = Strict-Transport-Security -> List(max-age=31536000; includeSubDomains), X-Frame-Options -> List(SAMEORIGIN), X-XSS-Protection -> List(1; mode=block), Connection -> List(keep-alive), Content-Length -> List(67), Referrer-Policy -> List(no-referrer), Cache-Control -> List(no-store), X-Content-Type-Options -> List(nosniff), Content-Type -> List(application/json), Pragma -> List(no-cache), Date -> List(Wed, 13 Jan 2021 19:58:59 GMT), body = {"error":"invalid_grant","error_description":"Token is not active"}
+2021-01-13 12:58:59,304 MST  WARN OAuthAccessTokenProvider - Could not use existing refresh token. forcing to re-authorize correlationId="nKeov2XEb3"
+domino.common.UserErrorException: Authentication error. Please re-login by typing:
+ domino login
+	at domino.client.oauth.CliOAuthHandler.callTokenEndpoint(CliOAuthHandler.scala:47)
+	at domino.client.oauth.CliOAuthHandler.getAccessAndRefreshTokens(CliOAuthHandler.scala:22)
+	at domino.client.util.OAuthAccessTokenProvider.liftedTree1$1(AccessTokenProvider.scala:33)
+	at domino.client.util.OAuthAccessTokenProvider.performTokenRefresh(AccessTokenProvider.scala:32)
+	at domino.client.util.OAuthAccessTokenProvider.<init>(AccessTokenProvider.scala:19)
+	at domino.client.util.OAuthAccessTokenProvider$.apply(AccessTokenProvider.scala:50)
+	at domino.client.command.LoginCommand.loginViaOauth(LoginCommand.scala:117)
+	at domino.client.command.LoginCommand.$anonfun$loginToHost$10(LoginCommand.scala:55)
+	at scala.util.Either.fold(Either.scala:191)
+	at domino.client.command.LoginCommand.loginToHost(LoginCommand.scala:49)
+	at domino.client.command.LoginCommand.login(LoginCommand.scala:26)
+	at domino.client.Domino.executeCommand(Domino.scala:209)
+	at domino.client.Domino$.main(Domino.scala:41)
+	at domino.client.Domino.main(Domino.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.exe4j.runtime.LauncherEngine.launch(LauncherEngine.java:84)
+	at com.install4j.runtime.launcher.UnixLauncher.start(UnixLauncher.java:66)
+	at install4j.domino.client.Domino.main(Unknown Source)
+2021-01-13 12:59:35,186 MST DEBUG ClientControllerProxy - Getting user info from https://demo.dominodatalab.com/cliUserInfo
+2021-01-13 12:59:41,811 MST  INFO HttpService - HttpService maxConnections: 30 maxConnectionsPerRoute: 10 connectTimeoutSec: 60 readTimeoutSec: 120
+2021-01-13 12:59:41,988 MST  INFO Domino - ================================================================================
+2021-01-13 12:59:41,988 MST  INFO Domino - Starting client. BuildInfo=name: common-core, version: 4.3.1, scalaVersion: 2.12.10, sbtVersion: 1.3.10, buildNumber: 6c6dd07a-db2b-4ade-801e-048d376807f4, gitCommit: bf6bf5d8706ef9e5018b3221a375d1d0004dde36
+2021-01-13 12:59:41,989 MST DEBUG Domino - CWD = /Users/justinphelps/Documents/Domino/Projects/AirflowWorkspace
+2021-01-13 12:59:41,990 MST  INFO Domino - executing command: --help
