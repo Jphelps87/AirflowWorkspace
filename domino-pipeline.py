@@ -7,7 +7,7 @@ from airflow.models import Variable
 # Initialize Domino API object with the api_key and host
 api_key=Variable.get("DOMINO_USER_API_KEY")
 host=Variable.get("DOMINO_API_HOST")
-domino = Domino("jphelps/airflow-pipeline",api_key,host)
+domino = Domino("justin_phelps/Demo-AirflowPipeline",api_key,host)
 # Parameters to DAG object
 default_args = {
     'owner': 'domino',
