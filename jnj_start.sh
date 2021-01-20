@@ -47,7 +47,7 @@ if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
 	sed -i '639s#True#False#' "$DOMINO_WORKING_DIR"/airflow/airflow.cfg
 	
 	#add demo DAGS
-	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/domino-pipeline.py --output "$DOMINO_WORKING_DIR"/airflow/dags/domino-pipeline.py
+	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/rnatoy.py --output "$DOMINO_WORKING_DIR"/airflow/dags/rnatoy.py
 	curl https://raw.githubusercontent.com/Jphelps87/AirflowWorkspace/main/hello_world.py --output "$DOMINO_WORKING_DIR"/airflow/dags/hello_world.py
 
 fi
