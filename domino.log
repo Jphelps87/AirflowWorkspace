@@ -40,3 +40,20 @@ domino.common.UserErrorException: Authentication error. Please re-login by typin
 2021-01-13 12:59:41,988 MST  INFO Domino - Starting client. BuildInfo=name: common-core, version: 4.3.1, scalaVersion: 2.12.10, sbtVersion: 1.3.10, buildNumber: 6c6dd07a-db2b-4ade-801e-048d376807f4, gitCommit: bf6bf5d8706ef9e5018b3221a375d1d0004dde36
 2021-01-13 12:59:41,989 MST DEBUG Domino - CWD = /Users/justinphelps/Documents/Domino/Projects/AirflowWorkspace
 2021-01-13 12:59:41,990 MST  INFO Domino - executing command: --help
+2021-01-14 12:57:26,159 MST  INFO HttpService - HttpService maxConnections: 30 maxConnectionsPerRoute: 10 connectTimeoutSec: 60 readTimeoutSec: 120
+2021-01-14 12:57:26,434 MST  INFO Domino - ================================================================================
+2021-01-14 12:57:26,434 MST  INFO Domino - Starting client. BuildInfo=name: common-core, version: 4.3.1, scalaVersion: 2.12.10, sbtVersion: 1.3.10, buildNumber: 6c6dd07a-db2b-4ade-801e-048d376807f4, gitCommit: bf6bf5d8706ef9e5018b3221a375d1d0004dde36
+2021-01-14 12:57:26,435 MST DEBUG Domino - CWD = /Users/justinphelps/Documents/Domino/Projects/AirflowWorkspace
+2021-01-14 12:57:26,437 MST  INFO Domino - executing command: login
+2021-01-14 12:57:27,317 MST DEBUG LoginCommand - logging in to host: https://demo.dominodatalab.com
+2021-01-14 12:57:27,321 MST DEBUG ClientControllerProxy - Getting site config from https://demo.dominodatalab.com/cliSiteConfig
+2021-01-14 12:57:27,326 MST DEBUG ApiKeyBasedTransport - Issuing request to https://demo.dominodatalab.com/cliSiteConfig (full request = [Request redacted])
+2021-01-14 12:57:27,575 MST  INFO LoginCommand - Received site config:
+SiteConfig(https://demo.dominodatalab.com,S3,None,Some(https://demo.dominodatalab.com/assets/cli/default),authorization_key,Some(OAuthConfig(https://demo.dominodatalab.com/auth/realms/DominoRealm/protocol/openid-connect/token,https://demo.dominodatalab.com/authorizeCli,https://demo.dominodatalab.com/authorizeCliCode)),None)
+2021-01-14 12:57:27,575 MST DEBUG AutoUpdaterSettings$ - Setting CLI update source to: https://demo.dominodatalab.com/assets/cli/default/versions/updates.xml
+2021-01-14 12:57:27,823 MST DEBUG ClientControllerProxy - Getting user info from https://demo.dominodatalab.com/cliUserInfo
+2021-01-14 12:57:35,164 MST  INFO HttpService - HttpService maxConnections: 30 maxConnectionsPerRoute: 10 connectTimeoutSec: 60 readTimeoutSec: 120
+2021-01-14 12:57:35,359 MST  INFO Domino - ================================================================================
+2021-01-14 12:57:35,360 MST  INFO Domino - Starting client. BuildInfo=name: common-core, version: 4.3.1, scalaVersion: 2.12.10, sbtVersion: 1.3.10, buildNumber: 6c6dd07a-db2b-4ade-801e-048d376807f4, gitCommit: bf6bf5d8706ef9e5018b3221a375d1d0004dde36
+2021-01-14 12:57:35,361 MST DEBUG Domino - CWD = /Users/justinphelps/Documents/Domino/Projects/AirflowWorkspace
+2021-01-14 12:57:35,362 MST  INFO Domino - executing command: 
