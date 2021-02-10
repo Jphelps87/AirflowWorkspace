@@ -5,4 +5,3 @@ git status
 git add .
 git commit -m ''"$now"''
 git push
-

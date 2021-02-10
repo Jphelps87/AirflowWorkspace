@@ -77,5 +77,5 @@ airflow variables -s DOMINO_API_HOST $DOMINO_API_HOST
 airflow variables -s DOMINO_USER_API_KEY $DOMINO_USER_API_KEY
 #start airflow webserver and scheduler
 echo "Starting up Airflow"
-# airflow webserver -p 8080 -hn "0.0.0.0" &
+airflow webserver -p 8888 -hn "0.0.0.0" &
 airflow scheduler
