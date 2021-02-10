@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 #Check if Airflow Dir is present in Domino Project....if not create airflow directory
 if [ ! -d $DOMINO_WORKING_DIR/airflow ]; then
@@ -69,13 +70,13 @@ fi
 sudo cp "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
 # domino_url="base_url = https://$DOMAINNAME/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/r/notebookSession/$DOMINO_RUN_ID"
 # sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' /home/ubuntu/airflow/airflow.cfg
-sudo echo """enable_proxy_fix = True
+echo """enable_proxy_fix = True
 proxy_fix_x_for = 1
 proxy_fix_x_proto = 1
 proxy_fix_x_host = 1
 proxy_fix_x_port = 1
 proxy_fix_x_prefix = 1
-base_url = None """ >> /home/ubuntu/airflow/airflow.cfg
+base_url = None """ | sudo tee -a /home/ubuntu/airflow/airflow.cfg
 
 echo "Domino URL"
 actual= cat /home/ubuntu/airflow/airflow.cfg | grep base_url
