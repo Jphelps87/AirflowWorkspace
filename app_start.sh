@@ -67,7 +67,7 @@ if [ -f /home/ubuntu/airflow/airflow.cfg ]; then
 fi
 #build sub_domain url and refactor for each run.
 sudo cp "$DOMINO_WORKING_DIR"/airflow/airflow.cfg /home/ubuntu/airflow/airflow.cfg
-domino_url="base_url = https://$DOMAINNAME" #/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/r/notebookSession/$DOMINO_RUN_ID"
+domino_url="base_url = https://$DOMAINNAME/$DOMINO_PROJECT_OWNER/$DOMINO_PROJECT_NAME/r/notebookSession/$DOMINO_RUN_ID"
 sudo sed -i 's,base_url = http://localhost:8080,'"$domino_url"',' /home/ubuntu/airflow/airflow.cfg
 echo "Domino URL"
 actual= cat /home/ubuntu/airflow/airflow.cfg | grep base_url
